@@ -1,0 +1,14 @@
+# .gitignore
+node_modules/
+.cache/
+dist/
+build/
+out/
+
+*.log
+.env
+.env.*
+
+.vscode/
+.DS_Store
+Thumbs.db
