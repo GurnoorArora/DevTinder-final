@@ -14,7 +14,7 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    email:{
+    emailId:{
         type:String,
         required:true,
         unique:true, //this identifies if the entered email id is unique or not, if it is not then it is rejected
@@ -33,12 +33,12 @@ const userSchema=new mongoose.Schema({
     },
     age:{
         type:Number,
-        required:true,
+        required:false,
         min:18
     },
     gender:{
         type:String,
-        required:true,
+        required:false,
         //adding custom validation to gender
         validate(value)
         {
