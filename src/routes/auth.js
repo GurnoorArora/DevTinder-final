@@ -40,10 +40,12 @@ authRouter.post('/signup',async(req,res)=>{
 
 authRouter.post('/login',async(req,res)=>{
 
-    const email=req.body.email;
+    const email=req.body.emailId;
     const password=req.body.password;
+    console.log("Email: ", email);
+    console.log("Password: ", password);
     // checking if the email exits in the database
-    const user=await User.findOne({email:email});
+    const user=await User.findOne({emailId:email});
 
     if(!user)
     {

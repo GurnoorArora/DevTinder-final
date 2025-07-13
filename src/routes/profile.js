@@ -12,6 +12,7 @@ profileRouter.get('/profile/view',userAuth,async(req,res)=>{
     }
     else
     {
+        console.log(user);
         res.send(user);
     }
 })

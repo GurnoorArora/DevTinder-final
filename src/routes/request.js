@@ -12,7 +12,7 @@ requestRouter.post('/request/send/:status/:toUserId',userAuth, async (req, res) 
         const status=req.params.status;
         
         const allowedStatus=["ignored","interested"];
-        if(allowedStatus.includes(status))
+        if(!allowedStatus.includes(status))
         {
             return res.status(400).send("Invalid status provided");
         }
@@ -58,6 +58,38 @@ requestRouter.post('/request/send/:status/:toUserId',userAuth, async (req, res) 
     catch(err){
         res.status(500).send("Internal Server Error");
         console.error("Error sending connection request:", err);
+    }
+});
+requestRouter.post('/request/review/:status/:requestId', userAuth, async (req, res) => {
+    try {
+         const loggedInUserId=req.user;
+         const {status,requestId}=req.params;
+         console.log("Status:", status);
+         console.log("Request ID:", requestId);
+         const allowedStatus=["accepted","rejected"];
+         if(!allowedStatus.includes(req.params.status)) {
+            return res.status(400).json({"message":"Invalid status provided"});
+         }  
+
+         const connectionRequest=await ConnectionRequest.findOne({
+            _id: requestId,
+            toUserId: loggedInUserId._id ,// Ensure the request is for the logged-in user        
+            status:"interested",
+         });
+         if(!connectionRequest) {
+            return res.status(404).json({message:"Connection request not found or already processed"});
+         }
+         connectionRequest.status=status;
+        const data= connectionRequest.save();
+       res.json({
+        message:"Connection request"+status,
+        data: data
+
+       });
+    }
+    catch (err) {
+        res.status(500).send("Internal Server Error");
+        console.error("Error reviewing connection request:", err);
     }
 });
 module.exports = requestRouter;
