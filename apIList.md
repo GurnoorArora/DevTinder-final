@@ -14,6 +14,7 @@ connectionRequestRouter
 status here can either be ignored or intersted
 
 -POST /request/review/:status/:requestId
+
 userRouter
 -GET /user/connections
 -GET /user/ request/received
