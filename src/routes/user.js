@@ -10,7 +10,7 @@ userRouter.get('/user/requests/received',userAuth, async (req, res) => {
         const connectionRequests = await ConnectionRequest.find({
             toUserId: loggedInUser._id,
             status:'interested'
-        });
+        }).populate('fromUserId',"firstName lastName photoUrl gender about skills");
         console.log("Connection Requests: ", connectionRequests);
         res.json({
             message:"Data Fetched Successfully",
