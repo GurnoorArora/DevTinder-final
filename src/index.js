@@ -7,6 +7,7 @@ const connectDB=require('./config/database');
 const User=require('./models/users');
 const {userAuth}=require("./middleware/auth");
 const cookieParser=require("cookie-parser");
+const cors=require("cors");
 app.use(express.json());
 app.use(cookieParser());
 const authRouter=require('./routes/auth');
