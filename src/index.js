@@ -8,7 +8,12 @@ const User=require('./models/users');
 const {userAuth}=require("./middleware/auth");
 const cookieParser=require("cookie-parser");
 const cors=require("cors");
-app.use(cors());
+app.use(cors(
+    {
+        origin: "http://localhost:5173", // Adjust this to your frontend URL
+        credentials: true, // Allow cookies to be sent with requests
+    }
+));
 app.use(express.json());
 app.use(cookieParser());
 const authRouter=require('./routes/auth');

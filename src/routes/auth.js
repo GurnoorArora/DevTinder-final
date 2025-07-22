@@ -59,7 +59,7 @@ authRouter.post('/login',async(req,res)=>{
        // const token=await jwt.sign({_id:user._id},"gurnoorarora",{expiresIn:'7d'});
        const token=await user.getJWT();
         res.cookie("token",token);
-        res.send("login successful");
+        res.send(user);
     }
     else
     {
