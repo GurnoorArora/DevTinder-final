@@ -63,7 +63,7 @@ authRouter.post('/login',async(req,res)=>{
     }
     else
     {
-        res.send("Invalid Credentials");
+        res.status(400).send("Invalid Credentials");
     }
 
 })
