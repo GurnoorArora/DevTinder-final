@@ -8,6 +8,7 @@ const User=require('./models/users');
 const {userAuth}=require("./middleware/auth");
 const cookieParser=require("cookie-parser");
 const cors=require("cors");
+require('dotenv').config();
 app.use(cors(
     {
         origin: "http://localhost:5173", // Adjust this to your frontend URL
