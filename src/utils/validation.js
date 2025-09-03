@@ -1,4 +1,5 @@
 const validation=require("validator");
+require('dotenv').config();
 const validateSignupData=(req)=>{
     const {firstName,lastName,emailId,password}=req.body;
     console.log(emailId);
