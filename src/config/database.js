@@ -1,8 +1,9 @@
 const mongoose=require("mongoose");
+require('dotenv').config();
 
 const connectDB=async()=>{
     await mongoose.connect(
-        "mongodb+srv://gurnoora51:Ggg%406350107686@devtinder.npbge.mongodb.net/"
+        process.env.DB_CONNECTION_SECRET
 
     )
 }

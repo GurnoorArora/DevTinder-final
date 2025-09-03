@@ -1,5 +1,6 @@
 const jwt=require("jsonwebtoken");
 const User=require('../models/users');
+require('dotenv').config();
 
 
 const userAuth=async(req,res,next)=>{
@@ -8,7 +9,7 @@ const userAuth=async(req,res,next)=>{
         if(!token){
             return res.status(401).send("Please Log in to continue");
         }
-        const decodedObj=await jwt.verify(token,"gurnoorarora");
+        const decodedObj=await jwt.verify(token,process.env.JWT_SECRET);
         const {_id}=decodedObj;
         const user=await User.findOne({_id:_id});
         if(!user)

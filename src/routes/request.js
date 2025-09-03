@@ -4,9 +4,12 @@ const { userAuth } = require('../middleware/auth');
 const User=require('../models/users');
 const { connection, Connection } = require('mongoose');
 const ConnectionRequest = require('../models/connectionRequest');
+const sendEmail=require('../utils/sendEmail');
+
 
 requestRouter.post('/request/send/:status/:toUserId',userAuth, async (req, res) => {
     try{
+      //  console.log(req);
         const fromUserId = req.user._id;
         const toUserId = req.params.toUserId;
         const status=req.params.status;
@@ -46,8 +49,15 @@ requestRouter.post('/request/send/:status/:toUserId',userAuth, async (req, res) 
         });
         //we created a new instance of connectionRequest 
         //now we will save it to the db
+        const name=req.user.firstName+" "+req.user.lastName;
 
         const data=await connectionRequest.save();
+        const emailRes = await sendEmail.run(
+            "A new friend request from " + name,  // subject
+            "You have received a new friend request on DevTinder from " + name  // body
+        );
+
+        console.log("Email Response:", emailRes);
         res.json({
             message: "Connection request sent successfully",
             data
