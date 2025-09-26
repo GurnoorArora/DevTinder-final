@@ -8,6 +8,7 @@ const User=require('./models/users');
 const {userAuth}=require("./middleware/auth");
 const cookieParser=require("cookie-parser");
 const cors=require("cors");
+const http=require('http');
 require('dotenv').config();
 app.use(cors(
     {
@@ -21,13 +22,14 @@ const authRouter=require('./routes/auth');
 const profileRouter=require('./routes/profile');
 const requestRouter=require('./routes/request');
 const userRouter=require('./routes/user');
+const { on } = require('events');
 
 app.use('/',authRouter);
 app.use('/',profileRouter); 
 app.use('/',requestRouter);
 app.use('/',userRouter);
 //creating a route for signing up the user
-
+const server=http.createServer(app);
 //creatig an api to login 
 
 // });
@@ -37,7 +39,7 @@ app.get('/',(req,res)=>{
 });
 connectDB().then(()=>{ 
     console.log("Database connection established...");
-    app.listen(port,()=>{
+    server.listen(port,()=>{
         console.log(`Server is running on port ${port}`);
     });
 }).catch((err)=>{
