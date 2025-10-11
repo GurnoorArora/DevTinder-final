@@ -1,5 +1,5 @@
 const socket=require('socket.io');
-
+const Message=require('../models/message.js');
 const initiateSocketConnection=(server)=>{
     const io=socket(server,{
         cors:{
@@ -16,17 +16,31 @@ const initiateSocketConnection=(server)=>{
 
             
         })
-        socket.on("SendMessage",({firstName,userId,targetUserId,text})=>{
+        socket.on('sendMessage', async ({firstName,userId,targetUserId,text})=>{
+
+        try{
             const roomId=[userId,targetUserId].sort().join("-");
-            console.log(`Message from ${firstName} in room ${roomId}: ${text}`);
-            io.to(roomId).emit("ReceiveMessage",{
+            //store this message in the database
+            const message=new Message({
+                roomId,
+                senderId:userId,
+                receiverId:targetUserId,
+                text
+            });
+            await message.save();
+            io.to(roomId).emit('messageReceived',{
                 text,
                 firstName,
                 userId
             });
-        })
+        } catch (error) {
+            console.error('Error saving message:', error);
+        }
+    });
 
         socket.on('disconnect',()=>{
+            console.log('User disconnected');
+
         })
 
         

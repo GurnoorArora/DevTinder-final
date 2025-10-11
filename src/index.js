@@ -10,6 +10,7 @@ const cookieParser=require("cookie-parser");
 const cors=require("cors");
 const http=require('http');
 require('dotenv').config();
+const initiateSocketConnection=require('./utils/socket');
 app.use(cors(
     {
         origin: "http://localhost:5173", // Adjust this to your frontend URL
@@ -22,17 +23,21 @@ const authRouter=require('./routes/auth');
 const profileRouter=require('./routes/profile');
 const requestRouter=require('./routes/request');
 const userRouter=require('./routes/user');
+const chatRouter=require('./routes/chatRoutes');
 const { on } = require('events');
 
 app.use('/',authRouter);
 app.use('/',profileRouter); 
 app.use('/',requestRouter);
+app.use('/',chatRouter);    
 app.use('/',userRouter);
 //creating a route for signing up the user
 const server=http.createServer(app);
 //creatig an api to login 
 
 // });
+initiateSocketConnection(server);
+
 
 app.get('/',(req,res)=>{
     res.send("Welcome to the Dev Tinder");
