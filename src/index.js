@@ -24,11 +24,14 @@ const profileRouter=require('./routes/profile');
 const requestRouter=require('./routes/request');
 const userRouter=require('./routes/user');
 const chatRouter=require('./routes/chatRoutes');
+const testRouter=require('./routes/testrouteOpenAI');
+    
 const { on } = require('events');
 
 app.use('/',authRouter);
 app.use('/',profileRouter); 
 app.use('/',requestRouter);
+app.use('/',testRouter);
 app.use('/',chatRouter);    
 app.use('/',userRouter);
 //creating a route for signing up the user
